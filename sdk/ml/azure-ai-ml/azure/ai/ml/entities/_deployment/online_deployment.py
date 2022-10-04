@@ -10,15 +10,15 @@ from os import PathLike
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
-from azure.ai.ml._restclient.v2022_02_01_preview.models import CodeConfiguration as RestCodeConfiguration
-from azure.ai.ml._restclient.v2022_02_01_preview.models import EndpointComputeType
-from azure.ai.ml._restclient.v2022_02_01_preview.models import (
+from azure.ai.ml._restclient.v2022_10_01.models import CodeConfiguration as RestCodeConfiguration
+from azure.ai.ml._restclient.v2022_10_01.models import EndpointComputeType
+from azure.ai.ml._restclient.v2022_10_01.models import (
     KubernetesOnlineDeployment as RestKubernetesOnlineDeployment,
 )
-from azure.ai.ml._restclient.v2022_02_01_preview.models import ManagedOnlineDeployment as RestManagedOnlineDeployment
-from azure.ai.ml._restclient.v2022_02_01_preview.models import OnlineDeploymentData as RestOnlineDeploymentData
-from azure.ai.ml._restclient.v2022_02_01_preview.models import OnlineDeploymentDetails as RestOnlineDeploymentDetails
-from azure.ai.ml._restclient.v2022_02_01_preview.models import Sku as RestSku
+from azure.ai.ml._restclient.v2022_10_01.models import ManagedOnlineDeployment as RestManagedOnlineDeployment
+from azure.ai.ml._restclient.v2022_10_01.models import OnlineDeployment as RestOnlineDeployment
+from azure.ai.ml._restclient.v2022_10_01.models import OnlineDeploymentProperties as RestOnlineDeploymentProperties
+from azure.ai.ml._restclient.v2022_10_01.models import Sku as RestSku
 from azure.ai.ml._schema._deployment.online.online_deployment import (
     KubernetesOnlineDeploymentSchema,
     ManagedOnlineDeploymentSchema,
@@ -180,11 +180,11 @@ class OnlineDeployment(Deployment):
         pass
 
     @abstractmethod
-    def _to_rest_object(self) -> RestOnlineDeploymentData:
+    def _to_rest_object(self) -> RestOnlineDeployment:
         pass
 
     @classmethod
-    def _from_rest_object(cls, deployment: RestOnlineDeploymentData) -> RestOnlineDeploymentDetails:
+    def _from_rest_object(cls, deployment: RestOnlineDeployment) -> RestOnlineDeploymentProperties:
 
         if deployment.properties.endpoint_compute_type == EndpointComputeType.KUBERNETES:
             return KubernetesOnlineDeployment._from_rest_object(deployment)
@@ -388,7 +388,7 @@ class KubernetesOnlineDeployment(OnlineDeployment):
     def _to_dict(self) -> Dict:
         return KubernetesOnlineDeploymentSchema(context={BASE_PATH_CONTEXT_KEY: "./"}).dump(self)
 
-    def _to_rest_object(self, location: str) -> RestOnlineDeploymentData:  # pylint: disable=arguments-differ
+    def _to_rest_object(self, location: str) -> RestOnlineDeployment:  # pylint: disable=arguments-differ
         self._validate()
         code, environment, model = self._generate_dependencies()
 
@@ -410,7 +410,7 @@ class KubernetesOnlineDeployment(OnlineDeployment):
         )
         sku = RestSku(name="Default", capacity=self.instance_count)
 
-        return RestOnlineDeploymentData(location=location, properties=properties, tags=self.tags, sku=sku)
+        return RestOnlineDeployment(location=location, properties=properties, tags=self.tags, sku=sku)
 
     def _to_arm_resource_param(self, **kwargs):
 
@@ -440,7 +440,7 @@ class KubernetesOnlineDeployment(OnlineDeployment):
         self._validate_name()
 
     @classmethod
-    def _from_rest_object(cls, resource: RestOnlineDeploymentData) -> "KubernetesOnlineDeployment":
+    def _from_rest_object(cls, resource: RestOnlineDeployment) -> "KubernetesOnlineDeployment":
 
         deployment = resource.properties
 
@@ -577,7 +577,7 @@ class ManagedOnlineDeployment(OnlineDeployment):
     def _to_dict(self) -> Dict:
         return ManagedOnlineDeploymentSchema(context={BASE_PATH_CONTEXT_KEY: "./"}).dump(self)
 
-    def _to_rest_object(self, location: str) -> RestOnlineDeploymentData:  # pylint: disable=arguments-differ
+    def _to_rest_object(self, location: str) -> RestOnlineDeployment:  # pylint: disable=arguments-differ
         self._validate()
         code, environment, model = self._generate_dependencies()
         properties = RestManagedOnlineDeployment(
@@ -617,7 +617,7 @@ class ManagedOnlineDeployment(OnlineDeployment):
             properties.properties["private-network-connection"] = self.private_network_connection
         if hasattr(self, "egress_public_network_access") and self.egress_public_network_access:
             properties.egress_public_network_access = self.egress_public_network_access
-        return RestOnlineDeploymentData(location=location, properties=properties, tags=self.tags, sku=sku)
+        return RestOnlineDeployment(location=location, properties=properties, tags=self.tags, sku=sku)
 
     def _to_arm_resource_param(self, **kwargs):
 
@@ -636,7 +636,7 @@ class ManagedOnlineDeployment(OnlineDeployment):
         }
 
     @classmethod
-    def _from_rest_object(cls, resource: RestOnlineDeploymentData) -> "ManagedOnlineDeployment":
+    def _from_rest_object(cls, resource: RestOnlineDeployment) -> "ManagedOnlineDeployment":
 
         deployment = resource.properties
 

@@ -12,7 +12,7 @@ from marshmallow.exceptions import ValidationError as SchemaValidationError
 
 from azure.ai.ml._exception_helper import log_and_raise_error
 from azure.ai.ml._local_endpoints import LocalEndpointMode
-from azure.ai.ml._restclient.v2022_02_01_preview import AzureMachineLearningWorkspaces as ServiceClient022022Preview
+from azure.ai.ml._restclient.v2022_10_01 import AzureMachineLearningWorkspaces as ServiceClient102022
 from azure.ai.ml._restclient.v2022_02_01_preview.models import DeploymentLogsRequest
 from azure.ai.ml._scope_dependent_operations import (
     OperationConfig,
@@ -58,7 +58,7 @@ class OnlineDeploymentOperations(_ScopeDependentOperations):
         self,
         operation_scope: OperationScope,
         operation_config: OperationConfig,
-        service_client_02_2022_preview: ServiceClient022022Preview,
+        service_client_10_2022: ServiceClient102022,
         all_operations: OperationsContainer,
         local_deployment_helper: _LocalDeploymentHelper,
         credentials: TokenCredential = None,
@@ -67,8 +67,8 @@ class OnlineDeploymentOperations(_ScopeDependentOperations):
         super(OnlineDeploymentOperations, self).__init__(operation_scope, operation_config)
         # ops_logger.update_info(kwargs)
         self._local_deployment_helper = local_deployment_helper
-        self._online_deployment = service_client_02_2022_preview.online_deployments
-        self._online_endpoint_operations = service_client_02_2022_preview.online_endpoints
+        self._online_deployment = service_client_10_2022.online_deployments
+        self._online_endpoint_operations = service_client_10_2022.online_endpoints
         self._all_operations = all_operations
         self._credentials = credentials
         self._init_kwargs = kwargs
