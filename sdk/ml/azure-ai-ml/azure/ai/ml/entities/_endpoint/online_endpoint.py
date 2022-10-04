@@ -9,11 +9,9 @@ from os import PathLike
 from pathlib import Path
 from typing import IO, Any, AnyStr, Dict, Optional, Union
 
-from azure.ai.ml._restclient.v2022_02_01_preview.models import (
-    EndpointAuthMode,
-    OnlineEndpointData,
-)
-from azure.ai.ml._restclient.v2022_02_01_preview.models import OnlineEndpointDetails as RestOnlineEndpoint
+from azure.ai.ml._restclient.v2022_10_01.models import EndpointAuthMode
+from azure.ai.ml._restclient.v2022_10_01.models import OnlineEndpoint as RestOnlineEndpoint
+from azure.ai.ml._restclient.v2022_10_01.models import OnlineEndpointProperties as RestOnlineEndpointProperties
 from azure.ai.ml._restclient.v2022_05_01.models import ManagedServiceIdentity as RestManagedServiceIdentityConfiguration
 from azure.ai.ml._schema._endpoint import KubernetesOnlineEndpointSchema, ManagedOnlineEndpointSchema
 from azure.ai.ml._utils.utils import dict_eq
@@ -29,7 +27,7 @@ from azure.ai.ml.entities._mixins import RestTranslatableMixin
 from azure.ai.ml.entities._util import is_compute_in_override, load_from_dict
 from azure.ai.ml.exceptions import ErrorCategory, ErrorTarget, ValidationException
 from azure.ai.ml.entities._credentials import IdentityConfiguration
-from azure.ai.ml._restclient.v2022_02_01_preview.models import (
+from azure.ai.ml._restclient.v2022_10_01.models import (
     EndpointAuthKeys as RestEndpointAuthKeys,
     EndpointAuthToken as RestEndpointAuthToken
 )
@@ -115,7 +113,7 @@ class OnlineEndpoint(Endpoint):
         """
         return self._provisioning_state
 
-    def _to_rest_online_endpoint(self, location: str) -> OnlineEndpointData:
+    def _to_rest_online_endpoint(self, location: str) -> RestOnlineEndpoint:
         # pylint: disable=protected-access
         identity = (
             self.identity._to_online_endpoint_rest_object()
@@ -124,7 +122,7 @@ class OnlineEndpoint(Endpoint):
         )
         validate_endpoint_or_deployment_name(self.name)
         validate_identity_type_defined(self.identity)
-        properties = RestOnlineEndpoint(
+        properties = RestOnlineEndpointProperties(
             description=self.description,
             auth_mode=OnlineEndpoint._yaml_auth_mode_to_rest_auth_mode(self.auth_mode),
             properties=self.properties,
@@ -134,26 +132,26 @@ class OnlineEndpoint(Endpoint):
 
         if hasattr(self, "public_network_access") and self.public_network_access:
             properties.public_network_access = self.public_network_access
-        return OnlineEndpointData(
+        return RestOnlineEndpoint(
             location=location,
             properties=properties,
             identity=identity,
             tags=self.tags,
         )
 
-    def _to_rest_online_endpoint_traffic_update(self, location: str, no_validation: bool = False) -> OnlineEndpointData:
+    def _to_rest_online_endpoint_traffic_update(self, location: str, no_validation: bool = False) -> OnlineEndpoint:
         if not no_validation:
             # validate_deployment_name_matches_traffic(self.deployments, self.traffic)
             validate_identity_type_defined(self.identity)
             # validate_uniqueness_of_deployment_names(self.deployments)
-        properties = RestOnlineEndpoint(
+        properties = RestOnlineEndpointProperties(
             description=self.description,
             auth_mode=OnlineEndpoint._yaml_auth_mode_to_rest_auth_mode(self.auth_mode),
             endpoint=self.name,
             traffic=self.traffic,
             properties=self.properties,
         )
-        return OnlineEndpointData(
+        return RestOnlineEndpoint(
             location=location,
             properties=properties,
             identity=self.identity,
@@ -183,7 +181,7 @@ class OnlineEndpoint(Endpoint):
         return switcher.get(yaml_auth_mode, yaml_auth_mode)
 
     @classmethod
-    def _from_rest_object(cls, resource: OnlineEndpointData):  # pylint: disable=arguments-renamed
+    def _from_rest_object(cls, resource: RestOnlineEndpoint):  # pylint: disable=arguments-renamed
         auth_mode = cls._rest_auth_mode_to_yaml_auth_mode(resource.properties.auth_mode)
         # pylint: disable=protected-access
         identity = IdentityConfiguration._from_online_endpoint_rest_object(
@@ -329,12 +327,12 @@ class KubernetesOnlineEndpoint(OnlineEndpoint):
         context = {BASE_PATH_CONTEXT_KEY: Path(".").parent}
         return KubernetesOnlineEndpointSchema(context=context).dump(self)
 
-    def _to_rest_online_endpoint(self, location: str) -> OnlineEndpointData:
+    def _to_rest_online_endpoint(self, location: str) -> RestOnlineEndpoint:
         resource = super()._to_rest_online_endpoint(location)
         resource.properties.compute = self.compute
         return resource
 
-    def _to_rest_online_endpoint_traffic_update(self, location: str, no_validation: bool = False) -> OnlineEndpointData:
+    def _to_rest_online_endpoint_traffic_update(self, location: str, no_validation: bool = False) -> RestOnlineEndpoint:
         resource = super()._to_rest_online_endpoint_traffic_update(location, no_validation)
         resource.properties.compute = self.compute
         return resource
