@@ -48,7 +48,14 @@ from ._events import (
     PlayCanceled,
     RecognizeCompleted,
     RecognizeCanceled,
-    RecognizeFailed
+    RecognizeFailed,
+    RemoveParticipantSucceeded,
+    RemoveParticipantFailed,
+    ContinuousDtmfRecognitionToneReceived,
+    ContinuousDtmfRecognitionToneFailed,
+    ContinuousDtmfRecognitionStopped,
+    SendDtmfCompleted,
+    SendDtmfFailed,
 )
 from ._generated.models import (
     GetParticipantsResponse,
@@ -106,6 +113,13 @@ __all__ = [
     "RemoveParticipantResponse",
     "Gender",
     "DtmfTone",
-    "CallRejectReason"
+    "CallRejectReason",
+    "RemoveParticipantSucceeded",
+    "RemoveParticipantFailed",
+    "ContinuousDtmfRecognitionToneReceived",
+    "ContinuousDtmfRecognitionToneFailed",
+    "ContinuousDtmfRecognitionStopped",
+    "SendDtmfCompleted",
+    "SendDtmfFailed"
 ]
 __version__ = VERSION

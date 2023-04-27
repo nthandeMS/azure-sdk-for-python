@@ -17,7 +17,14 @@ from ._events import (
     PlayCanceled,
     RecognizeCompleted,
     RecognizeCanceled,
-    RecognizeFailed
+    RecognizeFailed,
+    RemoveParticipantSucceeded,
+    RemoveParticipantFailed,
+    ContinuousDtmfRecognitionToneReceived,
+    ContinuousDtmfRecognitionToneFailed,
+    ContinuousDtmfRecognitionStopped,
+    SendDtmfCompleted,
+    SendDtmfFailed
 )
 
 _call_automation_event_mapping = {
@@ -34,7 +41,14 @@ _call_automation_event_mapping = {
     "PlayCanceled": PlayCanceled,
     "RecognizeCompleted": RecognizeCompleted,
     "RecognizeCanceled": RecognizeCanceled,
-    "RecognizeFailed": RecognizeFailed
+    "RecognizeFailed": RecognizeFailed,
+    "RemoveParticipantSucceeded": RemoveParticipantSucceeded,
+    "RemoveParticipantFailed": RemoveParticipantFailed,
+    "ContinuousDtmfRecognitionToneReceived": ContinuousDtmfRecognitionToneReceived,
+    "ContinuousDtmfRecognitionToneFailed": ContinuousDtmfRecognitionToneFailed,
+    "ContinuousDtmfRecognitionStopped": ContinuousDtmfRecognitionStopped,
+    "SendDtmfCompleted": SendDtmfCompleted,
+    "SendDtmfFailed": SendDtmfFailed
 }
 
 def get_mapping():

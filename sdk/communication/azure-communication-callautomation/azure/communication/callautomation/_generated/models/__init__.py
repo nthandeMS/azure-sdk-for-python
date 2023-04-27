@@ -11,6 +11,7 @@ from ._models import AddParticipantRequest
 from ._models import AddParticipantResponse
 from ._models import AddParticipantSucceeded
 from ._models import AnswerCallRequest
+from ._models import BlobStorage
 from ._models import CallConnected
 from ._models import CallConnectionProperties
 from ._models import CallDisconnected
@@ -25,9 +26,15 @@ from ._models import CommunicationError
 from ._models import CommunicationErrorResponse
 from ._models import CommunicationIdentifierModel
 from ._models import CommunicationUserIdentifierModel
+from ._models import ContinuousDtmfRecognitionRequest
+from ._models import ContinuousDtmfRecognitionStopped
+from ._models import ContinuousDtmfRecognitionToneFailed
+from ._models import ContinuousDtmfRecognitionToneReceived
 from ._models import CreateCallRequest
 from ._models import CustomContext
 from ._models import DtmfOptions
+from ._models import DtmfResult
+from ._models import ExternalStorage
 from ._models import FileSource
 from ._models import GetParticipantsResponse
 from ._models import MediaStreamingConfiguration
@@ -51,11 +58,20 @@ from ._models import RecordingStateChanged
 from ._models import RecordingStateResponse
 from ._models import RedirectCallRequest
 from ._models import RejectCallRequest
+from ._models import RemoveParticipantFailed
 from ._models import RemoveParticipantRequest
 from ._models import RemoveParticipantResponse
+from ._models import RemoveParticipantSucceeded
 from ._models import ResultInformation
+from ._models import SendDtmfCompleted
+from ._models import SendDtmfFailed
+from ._models import SendDtmfRequest
+from ._models import SpeechOptions
+from ._models import SpeechResult
+from ._models import SsmlSource
 from ._models import StartCallRecordingRequest
 from ._models import TextSource
+from ._models import ToneInfo
 from ._models import TransferCallResponse
 from ._models import TransferToParticipantRequest
 from ._models import UnmuteParticipantsRequest
@@ -89,6 +105,7 @@ __all__ = [
     "AddParticipantResponse",
     "AddParticipantSucceeded",
     "AnswerCallRequest",
+    "BlobStorage",
     "CallConnected",
     "CallConnectionProperties",
     "CallDisconnected",
@@ -103,9 +120,15 @@ __all__ = [
     "CommunicationErrorResponse",
     "CommunicationIdentifierModel",
     "CommunicationUserIdentifierModel",
+    "ContinuousDtmfRecognitionRequest",
+    "ContinuousDtmfRecognitionStopped",
+    "ContinuousDtmfRecognitionToneFailed",
+    "ContinuousDtmfRecognitionToneReceived",
     "CreateCallRequest",
     "CustomContext",
     "DtmfOptions",
+    "DtmfResult",
+    "ExternalStorage",
     "FileSource",
     "GetParticipantsResponse",
     "MediaStreamingConfiguration",
@@ -129,11 +152,20 @@ __all__ = [
     "RecordingStateResponse",
     "RedirectCallRequest",
     "RejectCallRequest",
+    "RemoveParticipantFailed",
     "RemoveParticipantRequest",
     "RemoveParticipantResponse",
+    "RemoveParticipantSucceeded",
     "ResultInformation",
+    "SendDtmfCompleted",
+    "SendDtmfFailed",
+    "SendDtmfRequest",
+    "SpeechOptions",
+    "SpeechResult",
+    "SsmlSource",
     "StartCallRecordingRequest",
     "TextSource",
+    "ToneInfo",
     "TransferCallResponse",
     "TransferToParticipantRequest",
     "UnmuteParticipantsRequest",

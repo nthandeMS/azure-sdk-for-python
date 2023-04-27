@@ -85,6 +85,7 @@ class PlaySourceType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
 
     FILE = "file"
     TEXT = "text"
+    SSML = "ssml"
 
 
 class RecognitionType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
@@ -93,6 +94,8 @@ class RecognitionType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """
 
     DTMF = "dtmf"
+    SPEECH = "speech"
+    SPEECH_OR_DTMF = "speechOrDtmf"
     CHOICES = "choices"
 
 
@@ -100,6 +103,8 @@ class RecognizeInputType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
     """Determines the type of the recognition."""
 
     DTMF = "dtmf"
+    SPEECH = "speech"
+    SPEECH_OR_DTMF = "speechOrDtmf"
     CHOICES = "choices"
 
 
@@ -133,9 +138,7 @@ class RecordingState(str, Enum, metaclass=CaseInsensitiveEnumMeta):
 
 
 class RecordingStorageType(str, Enum, metaclass=CaseInsensitiveEnumMeta):
-    """Recording storage mode. When set to 'BlobStorage', specify required parameter
-    'ExternalStorageLocation', to export recording to your own blob container.
-    """
+    """Defines the type of external storage."""
 
     ACS = "acs"
     BLOB_STORAGE = "blobStorage"

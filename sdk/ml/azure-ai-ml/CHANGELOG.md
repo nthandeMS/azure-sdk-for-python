@@ -1,17 +1,42 @@
 # Release History
 
-## 1.6.0 (Unreleased)
+## 1.7.0 (Unreleased)
 
 ### Features Added
+
+### Bugs Fixed
+
+### Breaking Changes
+
+### Other Changes
+
+
+## 1.6.0 (05/01/2023)
+
+### Features Added
+- Added experimental scatter gather node to DSL package. This node has a unique mldesigner dependency.
 - Added support to make JobService and ServiceInstance objects serializable when printed
+- Support Singularity compute in pipeline job
+- Added purge operation support for workspace resource
+- Added Feature Store, its dedicated classes and updated the docstrings, now available in public interface. The classes added are `FeatureStoreOperations, FeatureSetOperations, FeatureStoreEntityOperations` with properties classes specific to the new features.
+- Support additional_includes in command component
+- Added experimental `distribution: ray` support in command job.
 
 ### Bugs Fixed
 
 - Fixed issue where show_progress=False was not being respected for uploads when set via MLClient
+- Fixed issue of spark input/output mode validation doesn't take effect because of wrong type assertion
+- Fixed the bug when setting `node.limits.timeout` to a pipeline input.
+- Removed Experimental Tag from Idle Shutdown, Custom Applications, Setup Scripts, and Image Metadata on Compute Instances.
+- Removed Experimental Tag from JobService classes
+
+### Breaking Changes
+
+- Renamed `JobServiceBase.job_service_type` to `type`
 
 ### Other Changes
 
-- 
+- Remove the default placeholder for CommandComponent.code
 
 ## 1.5.0 (2023-03-20)
 
@@ -21,7 +46,7 @@
 - Added support for registering named asset from job output or node output by specifying name and version settings.
 - Added support for data binding on outputs inside dynamic arguments for dsl pipeline
 - Added support for serverless compute in pipeline, command, automl and sweep job
-- Added support for `job_tier` and `priority` in job
+- Added support for `job_tier` and `priority` in standalone job
 - Added support for passing `locations` via command function and set it to `JobResourceConfiguration.locations`
 - Added support for modifying SSH key values after creation on Compute Resources.
 - Added WorkspaceConnection types `s3`, `snowflake`, `azure_sql_db`, `azure_synapse_analytics`, `azure_my_sql_db`, `azure_postgres_db`
