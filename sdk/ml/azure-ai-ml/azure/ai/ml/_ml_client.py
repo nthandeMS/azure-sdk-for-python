@@ -423,7 +423,7 @@ class MLClient:
         self._online_deployments = OnlineDeploymentOperations(
             self._operation_scope,
             self._operation_config,
-            self._service_client_02_2022_preview,
+            self._service_client_04_2023_preview,
             self._operation_container,
             self._local_deployment_helper,
             self._credential,
@@ -444,7 +444,7 @@ class MLClient:
         self._data = DataOperations(
             self._operation_scope,
             self._operation_config,
-            self._service_client_10_2021_dataplanepreview if registry_name else self._service_client_10_2022,
+            self._service_client_10_2021_dataplanepreview if registry_name else self._service_client_04_2023_preview,
             self._datastores,
             requests_pipeline=self._requests_pipeline,
             **ops_kwargs,
