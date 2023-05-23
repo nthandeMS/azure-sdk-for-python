@@ -1,5 +1,21 @@
 # Release History
 
+## 7.10.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Tracing updates:
+  - Span links on receive/send spans now fall back to using `Diagnostic-Id` if the `traceparent` message application property is not found.
+  - Span links will now still be created for receive/send spans even if no context propagation headers are found in message application properties.
+  - The `component` attribute was removed from all spans.
+
+
 ## 7.10.0 (2023-05-09)
 
 Version 7.10.0 is our first stable release of the Azure Service Bus client library based on a pure Python implemented AMQP stack.
